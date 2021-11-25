@@ -39,17 +39,19 @@ public class User {
 	
 	private boolean enabled;
 	
+	//Join two tables 'user_id' and 'role_id' to users_roles
 	@ManyToMany
 	@JoinTable(
 			name = "users_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
+	//create a set of roles, empty;
 	private Set<Role> roles = new HashSet<>();
 
 	
 	public User() {
-		// TODO Auto-generated constructor stub
+	
 	}
 	
 	public User(String email, String password, String firstName, String lastName) {

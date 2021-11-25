@@ -64,4 +64,11 @@ public class UserRepositoryTest {
 		
 		repo.findById(userId);
 	}
+	
+	@Test
+	public void testGetUserByEmail() {
+		String email = "1842401982@qq.com";
+		User user = repo.getUserByEmail(email);
+		assertThat(user).isNotNull();
+	}
 }
