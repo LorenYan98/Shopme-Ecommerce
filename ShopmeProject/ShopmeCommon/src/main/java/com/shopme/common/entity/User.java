@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
@@ -130,11 +131,27 @@ public class User {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+	
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", roles=" + roles + "]";
+	}
+	
+	// The field marked with @Transient is ignored by mapping framework 
+	// and the field not mapped to any database column 
+	@Transient
+	public String getPhotosImagePath() {
+		if(id == null || photos == null) {
+			return "/images/default-user.png";
+		}
+		return "/user-photos/" + this.id + "/" +this.photos;
+	}
+	
+	@Transient
+	public String getFullName() {
+		return firstName + " " + lastName;
 	}
 	
 }
