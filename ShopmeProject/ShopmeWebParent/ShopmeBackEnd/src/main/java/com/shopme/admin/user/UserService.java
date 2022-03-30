@@ -30,6 +30,11 @@ public class UserService {
 	public List<User> listAll(){
 		return (List<User>)userRepo.findAll(Sort.by("firstName").ascending());
 	}
+	
+	public User getByEmail(String email) {
+		return userRepo.getUserByEmail(email);
+	}
+	
 	public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyWord){
 		Sort sort = Sort.by(sortField);
 		
@@ -46,6 +51,7 @@ public class UserService {
 	public List<Role> listRoles(){
 		return (List<Role>) roleRepo.findAll();
 	}
+	
 	public User save(User user) {
 		boolean isUpdatingUser = (user.getId() != null);
 		
