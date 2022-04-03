@@ -42,6 +42,26 @@ public class Category {
 	
 	@OneToMany(mappedBy = "parent")
 	private Set<Category> childern = new HashSet<>();
+	
+	
+
+	public Category(Integer id) {
+		this.id = id;
+	}
+	
+	public Category() {
+	}
+
+	public Category(String name) {
+		this.name = name;
+		this.alias = name;
+		this.image = "default";
+	}
+	
+	public Category(String name, Category parent) {
+		this(name);
+		this.parent= parent;
+	}
 
 	public Integer getId() {
 		return id;

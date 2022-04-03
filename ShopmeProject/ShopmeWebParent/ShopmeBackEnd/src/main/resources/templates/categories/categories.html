@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head th:replace = "fragments :: page_head('Categories - Shopme Admin')"></head>
+		
+<body>
+<div class= "container-fluid"> 
+	<div  th:replace = "navigation :: menu"></div>
+	<div>
+	<h2>Manage Categories</h2>
+	<a th:href = "@{/categories/new}" class="fas fa-user-plus fa-2x icon-gray"></a>
+	&nbsp; 
+	<a th:href = "@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-gray"></a>
+	</div>
+	
+	<div>
+		<form th:action = "@{/categories/page/1}" class = "form-inline m-3">
+			<input type = "hidden" name = "sortField" th:value = "${sortField}">
+			<input type = "hidden" name = "sortDir" th:value = "${sortDir}">
+			Filter: &nbsp;
+			<input type = "search" name = "keyWord" th:value = "${keyWord}" class="form-control" required>
+			&nbsp;&nbsp;
+			<button type = "submit" value = "Search" class ="btn btn-primary">
+				<i class="fas fa-search icon-white" ></i>
+			</button>
+			&nbsp;&nbsp;
+			<button type = "button" value = "Clear" class ="btn btn-secondary" onclick = "clearFilter()">
+				<i class="fas fa-eraser"></i>
+			</button>
+		</form>
+	</div>
+	
+	<div class = "full-details">
+		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
+		<thead class = "thead-dark">
+		<tr>	
+				<th>ID</th> 
+				<th>Category Image</th> 
+				<th>Category Name</th> 
+				<th>Alias</th>
+				<th>Enabled</th> 
+				<th></th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "cat : ${listCategories}">
+				<td class = "hideable-column">[[${cat.id}]]</td>
+				<td></td>
+				<td class = "hideable-column">[[${cat.name}]]</td>
+				<td>[[${cat.alias}]]</td>
+				<td>
+					<a th:if ="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+					th:href="@{'/'}"></a>
+					<a th:if ="${cat.enabled == false}" class="fas fa-circle fa-2x icon-gray" 
+					th:href="@{'/'}"></a>
+				</td>
+				<td>
+					<a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/'}"></a>
+					 &nbsp; 
+					<a class="fas fa-trash-alt fa-2x icon-gray link-delete" th:href="@{'/users/'}"></a>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	
+	<div th:replace = "fragments :: footer"></div>
+</div>
+	
