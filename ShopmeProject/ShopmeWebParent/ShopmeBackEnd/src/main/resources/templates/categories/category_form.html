@@ -16,7 +16,7 @@
 	
 	<!-- use multipart/form-data when your form includes any <input type="file"> elements -->
 	
-	<form th:action="@{/category/save}" method = "post" style = "max-width: 700px; margin: 0 auto"
+	<form th:action="@{/categories/save}" method = "post" style = "max-width: 700px; margin: 0 auto"
 	enctype ="multipart/form-data"
 	th:object = ${category}>
 	<input type = "hidden" th:field = *{id} />
@@ -50,7 +50,7 @@
 				<label class = "col-sm-4 col-form-label">Image: </label>
 				<div class = "col-sm-8">
 				<input type ="hidden" th:field ="*{image}" />
-				<input type = "file" id ="fileImage" name ="image" accept = "image/png, image/jpeg"
+				<input type = "file" id ="fileImage" name ="fileImage" accept = "image/png, image/jpeg" required
 					class = "mb-2">
 				<div class ="mt-2">
 					<img id = "thumbnail" alt = "Image Preview" th:src ="@{/images/image-thumbnail.png}"

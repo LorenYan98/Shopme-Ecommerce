@@ -1,9 +1,11 @@
 package com.shopme.admin.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.math3.geometry.spherical.twod.SubCircle;
@@ -67,5 +69,12 @@ public class CategoryRepositoryTests {
 				}
 			}
 		}
+	}
+	
+	@Test
+	public void testListRootCategories() {
+		List<Category> rootCategories= repo.findRootCategories();
+		rootCategories.forEach(cat -> System.out.println(cat.getName()));
+		
 	}
 }

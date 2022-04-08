@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.poi.poifs.property.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,43 @@ public class CategoryService {
 	CategoryRepository repo;
 	
 	public List<Category> listAll(){
-		return (List<Category>) repo.findAll();
+		List<Category> rootCategories = repo.findRootCategories();
+		return listHierarchicalCategories(rootCategories);
+	}
+	
+	private List<Category> listHierarchicalCategories(List<Category> rootCategories){
+		List<Category> hierarchicalCategories = new ArrayList<>();
+		
+		for(Category rootCategory: rootCategories) {
+			hierarchicalCategories.add(Category.copyFull(rootCategory));
+			Set<Category> children = rootCategory.getChildern();
+			for(Category subCategory: children) {
+				String name = "--" + subCategory.getName();
+				hierarchicalCategories.add(Category.copyFull(subCategory, name));		
+				
+				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1);
+			}
+		}	
+		return hierarchicalCategories;
+	}
+	
+	private void listSubHierarchicalCategories(List<Category> hierarchicalCategories,
+			Category parent, int subLevel) {
+		Set<Category> children = parent.getChildern();
+		
+		for(Category subCategory : children) {
+			String name = "";
+			for(int i = 0; i< subLevel; i++) {
+				name += "--";
+			}
+			name += subCategory.getName();
+			hierarchicalCategories.add(Category.copyFull(subCategory, name));	
+			listSubHierarchicalCategories(hierarchicalCategories, subCategory, subLevel + 1);
+		}
+	}
+	
+	public Category save(Category category) {
+		return repo.save(category);
 	}
 	
 	public List<Category> listCategoriesUsedInForm(){
@@ -25,13 +62,13 @@ public class CategoryService {
 		
 		for(Category category: categoriesInDB) {
 			if(category.getParent() == null) {
-				categoriesUsedInForm.add(new Category(category.getName()));
+				categoriesUsedInForm.add(Category.copyIdAndName(category));
 				
 				Set<Category> children = category.getChildern();
 				
 				for(Category subCategory : children) {
 					String name = "--" + subCategory.getName();
-					categoriesUsedInForm.add(new Category(name));
+					categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 					
 					listChildren(categoriesUsedInForm, subCategory, 1);
 				}
@@ -50,7 +87,7 @@ public class CategoryService {
 			for(int i = 0; i < newSubLevel; i++) {
 				name  += "--";
 			}
-			categoriesUsedInForm.add(new Category(name + subCategory.getName()));
+			categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name + subCategory.getName()));
 			listChildren(categoriesUsedInForm, subCategory, newSubLevel);
 		}
 	}
