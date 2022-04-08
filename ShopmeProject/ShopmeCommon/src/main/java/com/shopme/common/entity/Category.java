@@ -1,5 +1,6 @@
 package com.shopme.common.entity;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -72,6 +73,7 @@ public class Category {
 		newCategory.setName(category.getName());
 		newCategory.setAlias(category.getAlias());
 		newCategory.setEnabled(newCategory.isEnabled());
+		newCategory.setImage(category.getImage());
 		return newCategory;
 	}
 	
@@ -90,6 +92,11 @@ public class Category {
 	public Category(String name, Category parent) {
 		this(name);
 		this.parent= parent;
+	}
+	
+	@Transient
+	public String getImagePath() {
+		return "/categories-image/" + this.id + "/" + this.getImage();
 	}
 
 	public Integer getId() {
