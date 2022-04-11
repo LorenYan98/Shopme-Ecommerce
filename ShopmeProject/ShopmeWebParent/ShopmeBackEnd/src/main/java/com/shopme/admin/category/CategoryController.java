@@ -78,17 +78,14 @@ public class CategoryController {
 		
 		if(!multipartFile.isEmpty()) {
 		
-		//Create custom fileName
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		category.setImage(fileName);
-		
-		Category savedCategory = service.save(category);
-		String uploadDir = "../categories-images/" + savedCategory.getId();
-		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			//Create custom fileName
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			category.setImage(fileName);
+			
+			Category savedCategory = service.save(category);
+			String uploadDir = "../categories-images/" + savedCategory.getId();
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		}else {
-			if(category.getImage().isEmpty()) {
-				category.setImage(null);
-			} 
 			service.save(category);
 		}
 		

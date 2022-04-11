@@ -111,7 +111,20 @@ public class CategoryService {
 		
 		if(isCreatingNew) {
 			if(categoryByName != null) {
-				return "Duplicated";
+				return "DuplicatedName";
+			}else {
+				Category categoryByAlias = repo.findByAlias(alias);
+				if(categoryByAlias != null) {
+					return "DuplicatedAlias";
+				}
+			}
+		}else {
+			if(categoryByName != null && categoryByName.getId() != id) {
+				return "DuplicatedName";
+			}
+			Category categoryByAlias = repo.findByAlias(alias);
+			if(categoryByAlias != null && categoryByAlias.getId() != id) {
+				return "DuplicatedAlias";
 			}
 		}
 		
