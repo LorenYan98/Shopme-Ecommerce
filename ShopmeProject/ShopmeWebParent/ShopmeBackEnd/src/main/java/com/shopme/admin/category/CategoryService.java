@@ -2,7 +2,10 @@ package com.shopme.admin.category;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.apache.poi.poifs.property.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.shopme.common.entity.Category;
 
 @Service
+@Transactional
 public class CategoryService {
 	@Autowired
 	CategoryRepository repo;
@@ -90,6 +94,32 @@ public class CategoryService {
 			categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name + subCategory.getName()));
 			listChildren(categoriesUsedInForm, subCategory, newSubLevel);
 		}
+	}
+	
+	public Category getCategoryInfo(Integer id) throws CategoryNotFoundException {
+		try {
+			return repo.findById(id).get();
+		}catch (NoSuchElementException e) {
+			throw new CategoryNotFoundException("Could not find any category with ID "+ id);
+		}
+	}
+	
+	public String checkUnique(Integer id, String name, String alias) {
+		boolean isCreatingNew = (id == null || id == 0);
+		
+		Category categoryByName = repo.findByName(name);
+		
+		if(isCreatingNew) {
+			if(categoryByName != null) {
+				return "Duplicated";
+			}
+		}
+		
+		return "OK";
+	}
+	
+	public void updateCategoryEnableStatus(Integer id, boolean enabled) {
+		repo.updateEnabledStatus(id, enabled);
 	}
 	
 }

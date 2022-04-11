@@ -72,7 +72,7 @@ public class Category {
 		newCategory.setId(category.getId());
 		newCategory.setName(category.getName());
 		newCategory.setAlias(category.getAlias());
-		newCategory.setEnabled(newCategory.isEnabled());
+		newCategory.setEnabled(category.isEnabled());
 		newCategory.setImage(category.getImage());
 		return newCategory;
 	}
@@ -96,6 +96,9 @@ public class Category {
 	
 	@Transient
 	public String getImagePath() {
+		if(id == null || image == null) {
+			return "/images/image-thumbnail.png";
+		}
 		return "/categories-image/" + this.id + "/" + this.getImage();
 	}
 

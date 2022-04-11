@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,10 +42,42 @@ public class CategoryController {
 		return "categories/category_form";
 	}
 	
+	@GetMapping("/categories/edit/{id}")
+	public String editCategory(Model model, 
+			@PathVariable(name = "id") Integer id,
+			RedirectAttributes redirectAttributes) throws CategoryNotFoundException {
+		List<Category> listcCategories = service.listCategoriesUsedInForm();
+		Category currentCategory = service.getCategoryInfo(id);
+		
+		
+		model.addAttribute("category", currentCategory);
+		model.addAttribute("pageTitle", "Edit Current Category");
+		model.addAttribute("listCategories", listcCategories);
+		
+		return "categories/category_form";
+	}
+	
+	@GetMapping("/categories/{id}/enabled/{status}")
+	public String updateCategoryEnableStatus(@PathVariable("id") Integer id,
+			@PathVariable("status") boolean enabled,
+			RedirectAttributes redirectAttributes) {
+
+		service.updateCategoryEnableStatus(id, enabled);
+		System.out.println("Hello follow");
+		String status =	enabled ? "enabled" : "disabled";
+		String message = "The category ID " + id + " has been " + status;
+		redirectAttributes.addFlashAttribute("message", message);
+		
+		return "redirect:/categories";
+	}
+	
 	@PostMapping("/categories/save")
 	public String saveCategory(Category category,
 			@RequestParam("fileImage") MultipartFile multipartFile,
 			RedirectAttributes redirectAttributes) throws IOException {
+		
+		if(!multipartFile.isEmpty()) {
+		
 		//Create custom fileName
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		category.setImage(fileName);
@@ -52,6 +85,13 @@ public class CategoryController {
 		Category savedCategory = service.save(category);
 		String uploadDir = "../categories-images/" + savedCategory.getId();
 		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+		}else {
+			if(category.getImage().isEmpty()) {
+				category.setImage(null);
+			} 
+			service.save(category);
+		}
+		
 		redirectAttributes.addFlashAttribute("message", "The category has been saved successfully");
 		return "redirect:/categories";
 	}

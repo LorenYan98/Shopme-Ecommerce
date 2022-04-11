@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.stereotype.Service;
 import org.springframework.test.annotation.Rollback;
 
 import com.shopme.common.entity.Category;
@@ -25,13 +26,14 @@ public class CategoryRepositoryTests {
 	@Autowired
 	private CategoryRepository repo;
 	
+	@Autowired CategoryService service;
+	
 	@Test
 	public void testCreateRootCategory() {
 		Category category = new Category("Comfputers");
 		Category savedCategory  = repo.save(category);
 		
 		assertThat(savedCategory.getId()).isGreaterThan(0);
-		
 	}
 	
 	@Test
@@ -75,6 +77,14 @@ public class CategoryRepositoryTests {
 	public void testListRootCategories() {
 		List<Category> rootCategories= repo.findRootCategories();
 		rootCategories.forEach(cat -> System.out.println(cat.getName()));
-		
 	}
+	
+	@Test
+	public void testGetByName() {
+		Category category = repo.findByName("Computers");
+		assertThat(category != null);
+		System.out.println(category.getName());
+	}
+	
+	
 }

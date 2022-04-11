@@ -53,12 +53,12 @@
 				<td>[[${cat.alias}]]</td>
 				<td>
 					<a th:if ="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
-					th:href="@{'/'}"></a>
+					th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"></a>
 					<a th:if ="${cat.enabled == false}" class="fas fa-circle fa-2x icon-gray" 
-					th:href="@{'/'}"></a>
+					th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}"></a>
 				</td>
 				<td>
-					<a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/'}"></a>
+					<a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"></a>
 					 &nbsp; 
 					<a class="fas fa-trash-alt fa-2x icon-gray link-delete" th:href="@{'/users/'}"></a>
 				</td>
