@@ -29,5 +29,32 @@
 	<a th:fragment="page_link(pageNum, label)" 
 		class = "page-link" 
 		th:href="@{'/users/page/' + ${pageNum} + '?sortField=' + ${sortField} +'&sortDir=' + ${sortDir}+ ${keyWord != null? '&keyWord=' + keyWord: ''}}">[[${label}]]</a>
+		
+	<div th:fragment = "category_status" th:remove = ${tag}>
+		<a th:if ="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+		th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"></a>
+		<a th:if ="${cat.enabled == false}" class="fas fa-circle fa-2x icon-gray" 
+		th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}"></a>
+	</div>
+	
+	<div th:fragment = "category_actions" th:remove = ${tag}>
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"></a>
+		 &nbsp; 
+		<th:block th:if = "${cat.hasChildren == false}" >
+			<a class="fas fa-trash-alt fa-2x icon-gray link-delete" 
+			th:href="@{'/categories/delete/' + ${cat.id}}"
+			th:catId = "${cat.id}"></a>
+		</th:block>
+	</div>
+	
+	<th th:fragment="category_column_link(fieldName, columnLabel, removeTag)" th:remove = "${removeTag}">
+		<a class = "text-white"
+		th:href="@{'/categories/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyWord != null? '&keyWord=' + keyWord: ''}}">
+			[[${columnLabel}]]
+		</a>
+
+		<span th:if = "${sortField == fieldName}"
+		th:class = "${sortDir == 'asc'? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+	</th> 
 </body>
 </html>
