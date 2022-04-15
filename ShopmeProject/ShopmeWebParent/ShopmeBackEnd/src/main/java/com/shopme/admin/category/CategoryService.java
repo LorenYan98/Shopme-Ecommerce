@@ -39,7 +39,7 @@ public class CategoryService {
 		}
 		
 		Pageable pageable = PageRequest.of(pageNum -1, ROOT_CATEGORIES_PER_PAGE, sort);
-		
+		 
 		Page<Category> pageCategories = repo.findRootCategories(pageable);
 		List<Category> rootCategories = pageCategories.getContent();
 		pageInfo.setTotalElement(pageCategories.getTotalElements());
