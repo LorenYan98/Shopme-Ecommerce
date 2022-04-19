@@ -16,6 +16,9 @@
 	<div th:fragment = "footer" class ="text-center">
 		<p>Shopme Control Panel - Copyright &copy Shopme</p>
 	</div>
+	
+	
+	
 	<th th:fragment="column_link(moduleURL, fieldName, columnLabel, removeTag)" th:remove = "${removeTag}">
 		<a class = "text-white"
 		th:href="@{${moduleURL} +'/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyword != null? '&keyword=' + keyword: ''}}">
@@ -26,51 +29,60 @@
 		th:class = "${sortDir == 'asc'? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 	</th> 
 	
+	
+	
 	<a th:fragment="page_link(moduleURL, pageNum, label)" 
 		class = "page-link" 
 		th:href="@{${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} +'&sortDir=' + ${sortDir}+ ${keyword != null? '&keyword=' + keyword: ''}}">[[${label}]]</a>
-		
-	<div th:fragment = "category_status(entityURL)" th:remove = ${tag}>
-		<a th:if ="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
-		th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"></a>
-		<a th:if ="${cat.enabled == false}" class="fas fa-circle fa-2x icon-gray" 
-		th:href="@{'/categories/' + ${cat.id} + '/enabled/true'}"></a>
+	
+	
+	
+	<div th:fragment = "status(enabled, entityURL)" th:remove = ${tag}>
+		<a th:if ="${enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+		th:href="@{ ${entityURL} + '/enabled/false'}"></a>
+		<a th:if ="${enabled == false}" class="fas fa-circle fa-2x icon-gray" 
+		th:href="@{${entityURL} + '/enabled/true'}"></a>
 	</div>
 	
-	<div th:fragment="pagination(moduleURL, entityName)" th:remove ="tag">
-	<div class = "text-center m-1" th:if = "${totalItem > 0}" >
-		<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItem}]]</span>
-	</div>
-	<div class = "text-center m-1" th:unless = "${totalItem > 0}" >
-		<span>No [[${entityName}]] found</span>
-	</div>
-
-	<div th:if = "${totalPages > 1}">
-		<ul class="pagination justify-content-center flex-wrap">
-			<li th:class="${currentPage > 1? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, 1, 'First')"></a></li>
-			<li th:class="${currentPage > 1? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a></li>
-			
-			
-			<li th:class= "${currentPage != i ? 'page-item': 'page-item active'}" th:each = "i : ${#numbers.sequence(1, totalPages)}">
-				<a th:replace = "fragments :: page_link(${moduleURL}, ${i}, ${i})"></a>
-			</li>
-			
-			
-			<li th:class="${currentPage < totalPages? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a></li>
-			<li th:class="${currentPage < totalPages? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')"></a></li>
-		</ul>
-	</div>	
-	</div>
 	
-	<div th:fragment = "category_actions" th:remove = ${tag}>
-		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"></a>
+	
+	<div th:fragment = "actions(entityURL, entity, visible)" th:remove = ${tag}>
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{${entityURL} +'/edit/' + ${entity.id}}"></a>
 		 &nbsp; 
-		<th:block th:if = "${cat.hasChildren == false}" >
+		<th:block th:if = "${visible == false}" >
 			<a class="fas fa-trash-alt fa-2x icon-gray link-delete" 
-			th:href="@{'/categories/delete/' + ${cat.id}}"
-			th:catId = "${cat.id}"></a>
+			th:href="@{${entityURL} + '/delete/' + ${entity.id}}"
+			th:entityId = "${entity.id}"></a>
 		</th:block>
 	</div>
+	
+	
+	
+	<div th:fragment="pagination(moduleURL, entityName)" th:remove ="tag">
+		<div class = "text-center m-1" th:if = "${totalItem > 0}" >
+			<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItem}]]</span>
+		</div>
+		<div class = "text-center m-1" th:unless = "${totalItem > 0}" >
+			<span>No [[${entityName}]] found</span>
+		</div>
+		<div th:if = "${totalPages > 1}">
+			<ul class="pagination justify-content-center flex-wrap">
+				<li th:class="${currentPage > 1? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, 1, 'First')"></a></li>
+				<li th:class="${currentPage > 1? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a></li>
+				
+				
+				<li th:class= "${currentPage != i ? 'page-item': 'page-item active'}" th:each = "i : ${#numbers.sequence(1, totalPages)}">
+					<a th:replace = "fragments :: page_link(${moduleURL}, ${i}, ${i})"></a>
+				</li>
+				
+				
+				<li th:class="${currentPage < totalPages? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a></li>
+				<li th:class="${currentPage < totalPages? 'page-item' :'page-item disabled' }"><a th:replace = "fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')"></a></li>
+			</ul>
+		</div>	
+	</div>
+	
+	
 	
 	<th th:fragment="category_column_link(fieldName, columnLabel, removeTag)" th:remove = "${removeTag}">
 		<a class = "text-white"
@@ -81,6 +93,8 @@
 		<span th:if = "${sortField == fieldName}"
 		th:class = "${sortDir == 'asc'? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 	</th> 
+	
+	
 	
 	<div th:fragment ="search_form(moduleURL)">
 		<form th:action = "@{${moduleURL}+'/page/1'}" class = "form-inline m-3">
@@ -100,5 +114,25 @@
 	</div>
 	
 	
+	
+	<div th:fragment ="deleteModalPopUps">
+		<div class = "modal fade text-center" id = "deleteConfirm">
+			<div class = "modal-dialog">
+				<div class = "modal-content">
+					<div class = "modal-header">
+						<h4 class = "modal-title" id ="modalTitle">Delete Confirmation</h4>
+						<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
+					</div>
+						<div class = "modal-body">
+							<span id ="confirmText"></span>
+						</div>
+						<div class = "modal-footer">
+							<a class = "btn btn-success" href = "" id = "yesButton">Yes</a>
+							<button type = "button" class = "btn btn-danger" data-dismiss = "modal">No</button> 
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
