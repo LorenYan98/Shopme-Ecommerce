@@ -18,7 +18,7 @@
 	</div>
 	<th th:fragment="column_link(moduleURL, fieldName, columnLabel, removeTag)" th:remove = "${removeTag}">
 		<a class = "text-white"
-		th:href="@{${moduleURL} +'/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyWord != null? '&keyWord=' + keyWord: ''}}">
+		th:href="@{${moduleURL} +'/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyword != null? '&keyword=' + keyword: ''}}">
 			[[${columnLabel}]]
 		</a>
 
@@ -28,9 +28,9 @@
 	
 	<a th:fragment="page_link(moduleURL, pageNum, label)" 
 		class = "page-link" 
-		th:href="@{${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} +'&sortDir=' + ${sortDir}+ ${keyWord != null? '&keyWord=' + keyWord: ''}}">[[${label}]]</a>
+		th:href="@{${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} +'&sortDir=' + ${sortDir}+ ${keyword != null? '&keyword=' + keyword: ''}}">[[${label}]]</a>
 		
-	<div th:fragment = "category_status" th:remove = ${tag}>
+	<div th:fragment = "category_status(entityURL)" th:remove = ${tag}>
 		<a th:if ="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
 		th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"></a>
 		<a th:if ="${cat.enabled == false}" class="fas fa-circle fa-2x icon-gray" 
@@ -81,6 +81,23 @@
 		<span th:if = "${sortField == fieldName}"
 		th:class = "${sortDir == 'asc'? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 	</th> 
+	
+	<div th:fragment ="search_form(moduleURL)">
+		<form th:action = "@{${moduleURL}+'/page/1'}" class = "form-inline m-3">
+			<input type = "hidden" name = "sortField" th:value = "${sortField}">
+			<input type = "hidden" name = "sortDir" th:value = "${sortDir}">
+			Filter: &nbsp;
+			<input type = "search" name = "keyword" th:value = "${keyword}" class="form-control" required>
+			&nbsp;&nbsp;
+			<button type = "submit" value = "Search" class ="btn btn-primary">
+				<i class="fas fa-search icon-white" ></i>
+			</button>
+			&nbsp;&nbsp;
+			<button type = "button" value = "Clear" class ="btn btn-secondary" onclick = "clearFilter()">
+				<i class="fas fa-eraser"></i>
+			</button>
+		</form>
+	</div>
 	
 	
 </body>

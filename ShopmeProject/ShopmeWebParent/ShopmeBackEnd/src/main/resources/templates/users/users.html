@@ -18,22 +18,7 @@
 	<a th:href = "@{/users/export/pdf}"  class="fas fa-file-pdf  fa-2x icon-gray" ></a>
 	</div>
 	
-	<div>
-		<form th:action = "@{/users/page/1}" class = "form-inline m-3">
-			<input type = "hidden" name = "sortField" th:value = "${sortField}">
-			<input type = "hidden" name = "sortDir" th:value = "${sortDir}">
-			Filter: &nbsp;
-			<input type = "search" name = "keyWord" th:value = "${keyWord}" class="form-control" required>
-			&nbsp;&nbsp;
-			<button type = "submit" value = "Search" class ="btn btn-primary">
-				<i class="fas fa-search icon-white" ></i>
-			</button>
-			&nbsp;&nbsp;
-			<button type = "button" value = "Clear" class ="btn btn-secondary" onclick = "clearFilter()">
-				<i class="fas fa-eraser"></i>
-			</button>
-		</form>
-	</div>
+	<div th:replace="fragments :: search_form('/users')"></div>
 	
 	<div th:if = "${message != null}" class = "alert alert-success text-center">
 		[[${message}]]

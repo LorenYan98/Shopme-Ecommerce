@@ -45,9 +45,9 @@ public class UserController {
 	@GetMapping("/users/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
-			@Param("keyWord") String keyWord) {
+			@Param("keyword") String keyword) {
 		
-		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyWord);
+		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		List<User> listUsers = page.getContent();
 		
 		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
@@ -66,7 +66,7 @@ public class UserController {
 		model.addAttribute("startCount", startCount);
 		model.addAttribute("endCount", endCount);
 		model.addAttribute("listUsers", listUsers);
-		model.addAttribute("keyWord", keyWord);
+		model.addAttribute("keyword", keyword);
 		return "users/users";
 	}
 	
