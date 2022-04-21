@@ -175,4 +175,8 @@ public class Category {
 		return hasChildren;
 	}
 	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

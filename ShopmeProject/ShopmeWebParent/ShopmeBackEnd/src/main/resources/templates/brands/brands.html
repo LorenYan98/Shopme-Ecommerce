@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head th:replace = "fragments :: page_head('Categories - Shopme Admin')"></head>
+		
+<body>
+<div class= "container-fluid"> 
+	<div  th:replace = "navigation :: menu"></div>
+	<div>
+	<h2>Manage Categories</h2>
+	<a th:href = "@{/brands/new}" class="fas fa-folder-plus fa-2x icon-gray"></a>
+	&nbsp; 
+	<a th:href = "@{/brands/export/csv}" class="fas fa-file-csv fa-2x icon-gray"></a>
+	</div>
+	<div th:if = "${message != null}" class = "alert alert-success text-center">
+		[[${message}]]
+	</div>
+	<div th:replace="fragments :: search_form('/brands')"></div>
+
+	<div class = "full-details">
+		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
+		<thead class = "thead-dark">
+		<tr>	
+				<th>Brand ID</th> 
+				<th>Logo</th> 
+			
+				<th th:replace= "fragments :: column_link('/brands', 'name','Brand Name', 'none' )"></th> 
+					
+				<th class = "hideable-column">Categories</th>
+				<th></th>
+		</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+		</table>
+	</div>
+	
+	
+	<div th:replace ="fragments :: deleteModalPopUps"/>
+	
+	<div th:replace = "fragments :: footer"></div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".link-delete").on("click", function(e){
+			e.preventDefault();
+			link = $(this);
+			entityId = link.attr("entityId")
+			//when the yesButton is on, the href value in the yes Button will be changed to delete-link href 
+			$("#yesButton").attr("href", link.attr("href"));
+			$("#confirmText").text("Are you sure you want to delete this brand ID " + entityId + " ?");
+			$("#deleteConfirm").modal();
+		});
+	});
+	
+	function clearFilter(){
+		window.location = "[[@{/brands}]]"
+	};
+</script>
+</body>
+</html>
