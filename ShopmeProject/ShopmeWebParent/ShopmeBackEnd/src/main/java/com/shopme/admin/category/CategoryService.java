@@ -33,7 +33,7 @@ public class CategoryService {
 			String keyword){
 		Sort sort = Sort.by("name");
 		
-		if(sortDir.equals("asc")) {
+		if(sortDir.equals("asc")) { 
 			sort = sort.ascending();
 		}else if(sortDir.equals("desc")){
 			sort = sort.descending();

@@ -6,7 +6,7 @@
 <div class= "container-fluid"> 
 	<div  th:replace = "navigation :: menu"></div>
 	<div>
-	<h2>Manage Categories</h2>
+	<h2>Manage Brands</h2>
 	<a th:href = "@{/brands/new}" class="fas fa-folder-plus fa-2x icon-gray"></a>
 	&nbsp; 
 	<a th:href = "@{/brands/export/csv}" class="fas fa-file-csv fa-2x icon-gray"></a>
@@ -34,10 +34,14 @@
 			<tr th:each = "brand : ${listBrands}">
 					<td class = "hideable-column">[[${brand.id}]]</td>
 					<td>
-					<img th:src = "@{${brand.logo}}" style = "width : 100px" class = "img-fluid">
+					<img th:src = "@{${brand.logoPath}}" style = "width : 100px" class = "img-fluid">
 					</td>
 					<td>[[${brand.name}]]</td>
-					<td class = "hideable-column">[NULL</td>
+					<td class = "hideable-column">
+						<th:block th:each = "cat : ${brand.categories}" >
+						<span class = "badge badge-secondary"> [[${cat.name}]] </span>
+						</th:block>
+					</td>
 					<td>
 						<div th:replace = "fragments :: actions('/brands', ${brand}, false)"></div>
 					</td>

@@ -1,5 +1,6 @@
 package com.shopme.common.entity;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ public class Brand {
 	
 	public Brand(String name) {
 		this.name = name;
+		this.logo = "logo.png";
 	}
 
 	public Integer getId() {
@@ -76,6 +78,14 @@ public class Brand {
 
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
+	}
+	
+	@Transient
+	public String getLogoPath() {
+		if(this.id == null) {
+			return "/images/image-thumbnail.png";
+		}
+		return "/brand-logos/" + this.id + "/" + this.logo;
 	}
 	
 	@Override
