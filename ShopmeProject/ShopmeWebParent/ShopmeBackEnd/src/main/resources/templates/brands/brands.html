@@ -31,6 +31,18 @@
 		</thead>
 		<tbody>
 			
+			<tr th:each = "brand : ${listBrands}">
+					<td class = "hideable-column">[[${brand.id}]]</td>
+					<td>
+					<img th:src = "@{${brand.logo}}" style = "width : 100px" class = "img-fluid">
+					</td>
+					<td>[[${brand.name}]]</td>
+					<td class = "hideable-column">[NULL</td>
+					<td>
+						<div th:replace = "fragments :: actions('/brands', ${brand}, false)"></div>
+					</td>
+				</tr>
+			
 		</tbody>
 		</table>
 	</div>

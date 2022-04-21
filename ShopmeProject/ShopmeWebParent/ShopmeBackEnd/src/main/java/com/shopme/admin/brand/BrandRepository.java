@@ -1,5 +1,6 @@
 package com.shopme.admin.brand;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.shopme.common.entity.Brand;
