@@ -46,17 +46,37 @@ public class BrandController {
 	}
 	
 	@GetMapping("/brands/edit/{id}")
-	public String editCategory(Model model,
+	public String editBrand(Model model,
 			@PathVariable(name = "id") Integer id,
 			RedirectAttributes redirectAttributes) {
-		List<Category> listcaCategories = categoryService.listCategoriesUsedInForm();
-		Brand currentBrand = brandService.getBrandInfo(id);
-		model.addAttribute("listCategories",listcaCategories);
-		model.addAttribute("brand",currentBrand);
-		model.addAttribute("pageTitle", "Edit Current Brand");
+		try {
+			List<Category> listcaCategories = categoryService.listCategoriesUsedInForm();
+			Brand currentBrand = brandService.getBrandInfo(id);
+			model.addAttribute("listCategories",listcaCategories);
+			model.addAttribute("brand",currentBrand);
+			model.addAttribute("pageTitle", "Edit Current Brand");
+			
+			return "brands/brand_form";
+		} catch (BrandNotFoundException e) {
+			redirectAttributes.addFlashAttribute("message",e.getMessage());
+			return "redirect:/brands";
+		}
 		
-		return "brands/brand_form";
-		
+	}
+	
+	@GetMapping("/brands/delete/{id}")
+	public String deleteBrand(Model model,
+			@PathVariable(name = "id") Integer id, 
+			RedirectAttributes redirectAttributes) {
+		try {
+			brandService.delete(id);
+			String categoryDir = "../brand-logos/" + id;
+			FileUploadUtil.removeDir(categoryDir);
+			redirectAttributes.addFlashAttribute("message", "The brand ID " + id + " has been deleted successfully");
+		} catch (BrandNotFoundException e) {
+			redirectAttributes.addFlashAttribute("message",e.getMessage());
+		}
+		return "redirect:/brands";
 	}
 	
 	@PostMapping("/brands/save")
