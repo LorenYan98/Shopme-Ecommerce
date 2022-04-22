@@ -106,7 +106,7 @@ public class Category {
 		if(id == null || image == null || image.equals("") || image.equals("default")) {
 			return "/images/image-thumbnail.png";
 		}
-		return "/categories-image/" + this.id + "/" + this.getImage();
+		return "/categories-images/" + this.id + "/" + this.getImage();
 	}
 
 	public Integer getId() {

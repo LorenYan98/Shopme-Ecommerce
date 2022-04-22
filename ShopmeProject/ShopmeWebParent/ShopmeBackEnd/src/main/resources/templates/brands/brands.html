@@ -17,12 +17,11 @@
 	<div th:replace="fragments :: search_form('/brands')"></div>
 
 	<div class = "full-details">
-		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
+		<table class = "table table-bordered table-striped table-hover ">
 		<thead class = "thead-dark">
 		<tr>	
-				<th>Brand ID</th> 
+				<th class="hideable-column">Brand ID</th> 
 				<th>Logo</th> 
-			
 				<th th:replace= "fragments :: column_link('/brands', 'name','Brand Name', 'none' )"></th> 
 					
 				<th class = "hideable-column">Categories</th>
@@ -51,9 +50,23 @@
 		</table>
 	</div>
 	
+	<div class = "less-details">
+		<div th:each = "brand : ${listBrands}" class ="row m-1">
+			<div class="col-4">
+			<img th:src = "@{${brand.logoPath}}" style = "width : 100px" class = "img-fluid">
+			</div>
+			<div class = "col-8">
+				<div>[[${brand.name}]]</div>
+				<div class="mt-2">
+					<div th:replace = "fragments :: actions('/brands', ${brand}, false)"/>
+				</div>
+			</div>
+			<div>&nbsp;</div>
+		</div>
+	</div>
 	
 	<div th:replace ="fragments :: deleteModalPopUps"/>
-	
+	<div th:replace = "fragments :: pagination('/brands', 'brands')"></div>
 	<div th:replace = "fragments :: footer"></div>
 </div>
 

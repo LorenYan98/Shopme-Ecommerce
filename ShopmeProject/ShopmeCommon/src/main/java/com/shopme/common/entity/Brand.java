@@ -31,7 +31,7 @@ public class Brand {
 	
 	@ManyToMany
 	@JoinTable(
-			name = "brand_categories",
+			name = "brands_categories",
 			joinColumns = @JoinColumn(name = "brand_id"),
 			inverseJoinColumns = @JoinColumn(name = "category_id")
 			)
@@ -42,6 +42,11 @@ public class Brand {
 	public Brand() {
 	}
 	
+	public Brand(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+		this.logo = "logo.png";
+	}
 	
 	public Brand(String name) {
 		this.name = name;

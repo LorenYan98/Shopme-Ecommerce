@@ -17,10 +17,10 @@
 	<div th:replace="fragments :: search_form('/categories')"></div>
 
 	<div class = "full-details">
-		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
+		<table class = "table table-bordered table-striped table-hover ">
 		<thead class = "thead-dark">
 		<tr>	
-				<th>ID</th> 
+				<th class="hideable-column">ID</th> 
 				<th>Category Image</th> 
 			
 				<th th:replace= "fragments :: column_link('/categories', 'name','Category Name', 'none' )"></th> 
