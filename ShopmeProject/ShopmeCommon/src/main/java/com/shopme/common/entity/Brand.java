@@ -14,7 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.aspectj.weaver.tools.Trace;
 
 @Entity
 @Table(name = "brands")
