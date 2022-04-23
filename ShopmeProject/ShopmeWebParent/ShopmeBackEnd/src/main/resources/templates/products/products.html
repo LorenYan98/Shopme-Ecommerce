@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head th:replace = "fragments :: page_head('Products - Shopme Admin')"></head>
+		
+<body>
+<div class= "container-fluid"> 
+	<div  th:replace = "navigation :: menu"></div>
+	<div>
+	<h2>Manage Products</h2>
+	<a th:href = "@{/products/new}" class="fas fa-folder-plus fa-2x icon-gray"></a>
+	&nbsp; 
+	<a th:href = "@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-gray"></a>
+	</div>
+	<div th:if = "${message != null}" class = "alert alert-success text-center">
+		[[${message}]]
+	</div>
+	<div th:replace="fragments :: search_form('/products')"></div>
+
+	<div class = "full-details">
+		<table class = "table table-bordered table-striped table-hover ">
+		<thead class = "thead-dark">
+		<tr>	
+				<th class="hideable-column">ID</th> 
+				<th>Main Image</th> 
+			
+				<th th:replace= "fragments :: column_link('/products', 'name','Prouduct Name', 'none' )"></th> 
+				<th class = "hideable-column">Brand</th>	
+				<th class = "hideable-column">Category</th>
+				<th>Enabled</th> 
+				<th></th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "pro : ${listProducts}">
+				<td class = "hideable-column">[[${pro.id}]]</td>
+				<td>
+				
+				</td>
+				<td>[[${pro.name}]]</td>
+				<td class = "hideable-column">[[${pro.brand.name}]]</td>
+				<td class = "hideable-column">[[${pro.category.name}]]</td>
+				<td>
+					<div th:replace = "fragments :: status(${pro.enabled}, '/products/' + ${pro.id})"></div>
+				</td>
+				<td>
+					<a class="fas fa-file-alt fa-2x icon-green"
+					th:href="@{'/products/detail/' +${pro.id}}"
+					title="View details of this product"></a>
+					&nbsp;
+					<span th:replace = "fragments :: actions('/products', ${pro}, false)"></span>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+
+	<div th:replace ="fragments :: deleteModalPopUps"/>
+	
+	<div th:replace = "fragments :: footer"></div>
+</div>
+
+<div class = "less-details">
+		<div th:each = "pro : ${listProducts}" class ="row m-1">
+			<div class="col-4">
+			<img th:src = "@{${xc}}" style = "width : 100px" class = "img-fluid">
+			</div>
+			<div class = "col-8">
+				<div>[[${pro.name}]]</div>
+				<div class="mt-2">
+					
+					<span th:replace = "fragments :: status(${pro.enabled}, '/products/' + ${pro.id})"/>
+					&nbsp;
+					<a class="fas fa-file-alt fa-2x icon-green"
+						th:href="@{'/products/detail/' +${pro.id}}"
+						title="View details of this product"></a>
+					&nbsp;
+					<span th:replace = "fragments :: actions('/products', ${pro}, false)"/>
+				</div>
+			</div>
+			<div>&nbsp;</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".link-delete").on("click", function(e){
+			e.preventDefault();
+			link = $(this);
+			entityId = link.attr("entityId")
+			//when the yesButton is on, the href value in the yes Button will be changed to delete-link href 
+			$("#yesButton").attr("href", link.attr("href"));
+			$("#confirmText").text("Are you sure you want to delete this category ID " + entityId + " ?");
+			$("#deleteConfirm").modal();
+		});
+	});
+	
+	function clearFilter(){
+		window.location = "[[@{/products}]]"
+	};
+</script>
+</body>
+</html>

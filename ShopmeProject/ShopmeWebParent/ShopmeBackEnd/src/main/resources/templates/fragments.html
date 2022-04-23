@@ -37,16 +37,16 @@
 	
 	
 	
-	<div th:fragment = "status(enabled, entityURL)" th:remove = ${tag}>
+	<span th:fragment = "status(enabled, entityURL)" th:remove = ${tag}>
 		<a th:if ="${enabled == true}" class="fas fa-check-circle fa-2x icon-green"
 		th:href="@{ ${entityURL} + '/enabled/false'}"></a>
 		<a th:if ="${enabled == false}" class="fas fa-circle fa-2x icon-gray" 
 		th:href="@{${entityURL} + '/enabled/true'}"></a>
-	</div>
+	</span>
 	
 	
 	
-	<div th:fragment = "actions(entityURL, entity, visible)" th:remove = ${tag}>
+	<span th:fragment = "actions(entityURL, entity, visible)" th:remove = ${tag}>
 		<a class="fas fa-edit fa-2x icon-green" th:href="@{${entityURL} +'/edit/' + ${entity.id}}"></a>
 		 &nbsp; 
 		<th:block th:if = "${visible == false}" >
@@ -54,7 +54,7 @@
 			th:href="@{${entityURL} + '/delete/' + ${entity.id}}"
 			th:entityId = "${entity.id}"></a>
 		</th:block>
-	</div>
+	</span>
 	
 	
 	

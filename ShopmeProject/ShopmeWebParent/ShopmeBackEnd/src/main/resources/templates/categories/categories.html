@@ -39,10 +39,10 @@
 				<td>[[${cat.name}]]</td>
 				<td class = "hideable-column">[[${cat.alias}]]</td>
 				<td>
-					<div th:replace = "fragments :: status(${cat.enabled}, '/categories/' + ${cat.id})"></div>
+					<span th:replace = "fragments :: status(${cat.enabled}, '/categories/' + ${cat.id})"></span>
 				</td>
 				<td>
-					<div th:replace = "fragments :: actions('/categories', ${cat}, ${cat.hasChildren})"></div>
+					<span th:replace = "fragments :: actions('/categories', ${cat}, ${cat.hasChildren})"></span>
 				</td>
 			</tr>
 		</tbody>
@@ -57,9 +57,9 @@
 			<div class = "col-8">
 				<div>[[${cat.name}]]</div>
 				<div class="mt-2">
-					<div th:replace = "fragments :: status(${cat.enabled}, '/categories/' + ${cat.id})"/>
+					<span th:replace = "fragments :: status(${cat.enabled}, '/categories/' + ${cat.id})"/>
 					&nbsp;
-					<div th:replace = "fragments :: actions('/categories', ${cat}, ${cat.hasChildren})"/>
+					<span th:replace = "fragments :: actions('/categories', ${cat}, ${cat.hasChildren})"/>
 				</div>
 			</div>
 			<div>&nbsp;</div>
