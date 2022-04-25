@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th = "http://www.thymeleaf.org">
 <head>
-<head th:replace="fragments :: page_head(${pageTitle}, 'tag')">
-<link rel="stylesheet" th:href="@{/richtext/richtext.min.css}" />
-<script th:src="@{}/richtext/richtext.min.js"></script>
+	<head th:replace = "fragments :: page_head(${pageTitle}, 'tag')"/>
+	<link rel="stylesheet" type = "text/css" th:href = "@{/richtext/richtext.min.css}"/>
+	<script type ="text/javascript" th:src="@{/richtext/jquery.richtext.min.js}"></script>
 </head>
 
 
-
+		
 <body>
 	<div class="container-fluid">
 		<div th:replace="navigation :: menu"></div>
 
 		<div>
+
 			<h2>Manage Products | [[${pageTitle}]]</h2>
 		</div>
 
@@ -25,7 +26,7 @@
 				<div>
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
-						<li class="nav-item"><a class="nav-link active p-3"
+						<li class="nav-item"><a class="nav-link active "
 							data-toggle="tab" href="#overview" role="tab">Overview</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#description" role="tab">Description</a></li>
@@ -33,18 +34,23 @@
 							href="#images" role="tab">Images</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#details" role="tab">Details</a></li>
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#shipping" role="tab">Shipping</a></li>
 					</ul>
 
 					<!-- Tab panes -->
 					<div class="tab-content">
 						<div class="tab-pane active" id="overview" role="tabpanel">
-							<div th:replace="products/product_overview :: product_overview"></div>
+							<div th:replace="products/product_overview :: content"></div>
 						</div>
 						<div class="tab-pane" id="description" role="tabpanel">
-							<div th:replace="products/product_description :: product_description"></div>
+							<div th:replace="products/product_description :: content"></div>
 						</div>
 						<div class="tab-pane" id="images" role="tabpanel">Images</div>
 						<div class="tab-pane" id="details" role="tabpanel">Details</div>
+						<div class="tab-pane p-3" id="shipping" role="tabpanel">
+							<div th:replace="products/product_shipping :: content"></div>
+						</div>
 					</div>
 
 				</div>
@@ -61,19 +67,24 @@
 
 	</div>
 
-	<script th:src="@{/js/common_form.js}"></script>
+	<script th:src = "@{/js/common_form.js}"></script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	moduleURL = "[[@{/products}]]"
 	brandModuleURL = "[[@{/brands}]]"
 	dropdownBrands = $("#brand")
 	dropdownCategories =$("#category")
 	
 	$(document).ready(function(){
-		$("#brand").change(function(){
+	
+		$("#shortDescription").richText();
+		$("#fullDescription").richText();
+		
+		dropdownBrands.change(function(){
 			dropdownCategories.empty();
 			getCategories();
 		});
+		getCategories();
 	})
 	
 	function getCategories(){

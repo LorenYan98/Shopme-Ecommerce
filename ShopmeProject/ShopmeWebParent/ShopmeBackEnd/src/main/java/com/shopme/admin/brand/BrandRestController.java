@@ -18,7 +18,7 @@ import com.shopme.common.entity.Category;
 public class BrandRestController {
 
 	@Autowired
-	private BrandService service;
+	private BrandService service; 
 	
 	@PostMapping("/brands/check_unique")
 	public String checkUnique(@Param("id") Integer id, @Param("name") String name) {
