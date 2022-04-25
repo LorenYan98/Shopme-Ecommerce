@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<body>
+	<div th:fragment = "product_description" remove="tag">
+		<input type = "hidden" th:field = *{id} />
+		<div class = "p-3">
+		<div>
+			<label>Short Description:</label>
+			<textarea class="form-control" th:field="*{shortDescription}" rows ="5" required></textarea>
+		</div>
+		
+	</div>
+	</div>
+</body>
+</html>

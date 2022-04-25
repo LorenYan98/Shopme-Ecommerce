@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th = "http://www.thymeleaf.org">
-<head th:replace = "fragments :: page_head('Your Account Details')">
+<head th:replace = "fragments :: page_head('Your Account Details','none')">
 
 		
 <body>
@@ -9,9 +9,6 @@
 	
 	
 	<div>
-	<!-- th:object="${brand}" 用于接收后台传来的variable, 这里是user -->
-	<!-- th:field，用法：th:field="*{name}"，(用来绑定后台对象和表单数据) -->
-	<!-- th:field需要有th:object 指定前台传过来的参数 -->
 	
 	<!-- use multipart/form-data when your form includes any <input type="file"> elements -->
 	
