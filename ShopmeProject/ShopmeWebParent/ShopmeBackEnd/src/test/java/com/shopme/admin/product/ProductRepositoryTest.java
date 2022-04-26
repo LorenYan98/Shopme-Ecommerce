@@ -52,4 +52,19 @@ public class ProductRepositoryTest {
 		assertThat(savedProduct.getId()).isGreaterThan(0);
 	}
 	
+	@Test
+	public void testSaveProductWithImages() {
+		Integer productId = 3;
+		Product product = repository.findById(productId).get();
+		
+		product.setMainImage("main image.jpg");
+		product.addExtraImage("extra image 1.png");
+		product.addExtraImage("extra image 2.png");
+		product.addExtraImage("extra image 3.png");
+		product.addExtraImage("extra image_4.png");
+		
+		Product savedProduct = repository.save(product);
+		assertThat(savedProduct.getImages().size()).isEqualTo(4);
+		
+	}
 }

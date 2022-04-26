@@ -22,7 +22,8 @@
 			<!-- use multipart/form-data when your form includes any <input type="file"> elements -->
 
 			<form th:action="@{/products/save}" method="post"
-				enctype="multipart/form-data" th:object=${product}>
+				enctype="multipart/form-data" th:object=${product}
+				onsubmit = "return checkUnique(this)">
 				<div>
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -110,7 +111,7 @@
 			if(response == "OK"){
 				form.submit();
 			}else if(response == "Duplicate"){
-				showWarningModal("There is another category having the same name: " + brandName)
+				showWarningModal("There is another category having the same name: " + productName)
 			}else{
 				showErrorModal("Unknown response from server");
 			}

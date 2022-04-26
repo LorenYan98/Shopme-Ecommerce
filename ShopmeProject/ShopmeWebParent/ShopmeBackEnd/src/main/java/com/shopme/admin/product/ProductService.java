@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 
+import com.shopme.admin.brand.BrandNotFoundException;
+import com.shopme.common.entity.Brand;
 import com.shopme.common.entity.Product;
 
 @Service
@@ -36,5 +38,33 @@ public class ProductService {
 		product.setUpdatedTime(new Date());
 		return productRepo.save(product);
 		
+	}
+
+	public String checkUnique(Integer id, String name) {
+		boolean isCreatingNew = (id == null || id == 0);
+		Product productByName = productRepo.findByName(name);
+		
+		if(isCreatingNew) {
+			if(productByName != null) {
+				return "Duplicate";
+			}
+		}else {
+			if(productByName != null && productByName.getId() != id) {
+				return "Duplicate";
+			}
+		}
+		return "OK";
+	}
+	
+	public void updateEnableStatus(Integer id, boolean enabled) {
+		productRepo.updateEnabledStatus(id, enabled);
+	}
+	
+	public void delete(Integer id) throws ProductNotFoundException {
+		Long countById = productRepo.countById(id);
+		if(countById == null || countById == 0) {
+			throw new ProductNotFoundException("Could not find any product with ID " + id);
+		}
+		productRepo.deleteById(id);
 	}
 }
