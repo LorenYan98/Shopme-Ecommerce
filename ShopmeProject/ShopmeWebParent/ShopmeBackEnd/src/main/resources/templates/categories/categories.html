@@ -80,7 +80,7 @@
 			//when the yesButton is on, the href value in the yes Button will be changed to delete-link href 
 			$("#yesButton").attr("href", link.attr("href"));
 			$("#confirmText").text("Are you sure you want to delete this category ID " + entityId + " ?");
-			$("#deleteConfirm").modal();
+			$("#deleteConfirm").modal('show');
 		});
 	});
 	

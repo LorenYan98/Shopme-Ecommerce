@@ -1,5 +1,6 @@
 	dropdownBrands = $("#brand")
 	dropdownCategories =$("#category")
+	var extraImageCount = 0;
 	
 	$(document).ready(function(){
 	
@@ -13,7 +14,8 @@
 		getCategories();
 		
 		$("input[name ='extraImage']").each(function(index){
-			$(this).change(function(){
+			extraImageCount++;
+			$(this).change(function(){	
 				showExtraImageThumbnail(this, index);
 			});
 		});
@@ -30,7 +32,10 @@
 		};
 		
 		reader.readAsDataURL(file);
-		addNextExtraImageSection(index + 1);
+		if(index >= extraImageCount - 1){
+			addNextExtraImageSection(index + 1);
+		}
+		
 	}
 	
 	function addNextExtraImageSection(index){
@@ -57,9 +62,11 @@
 		
 		$("#divProductImages").append(htmlExtraImage);
 		$("#extraImageHeader" + (index - 1)).append(htmlLinkRemove);
+		extraImageCount++;
 	}
 	
 	function removeExtraImage(index){
+
 		$("#divExtraImage" + index).remove();
 	}
 	
@@ -72,17 +79,17 @@
 			})
 		})
 	}
-	
+
 	function checkUnique(form){
 		productName = $("#name").val();
 		productId = $("#id").val();
 		
 		csrfValue = $("input[name = '_csrf']").val()
 	
-		url = "[[@{/products/check_unique}]]"
+		
 		params = {id : productId, name: productName, _csrf: csrfValue};
 		
-		$.post(url, params, function(response){
+		$.post(checkUniqueUrl, params, function(response){
 			if(response == "OK"){
 				form.submit();
 			}else if(response == "Duplicate"){
