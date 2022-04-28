@@ -4,6 +4,7 @@
 	<head th:replace = "fragments :: page_head(${pageTitle}, 'tag')"/>
 	<link rel="stylesheet" type = "text/css" th:href = "@{/richtext/richtext.min.css}"/>
 	<script type ="text/javascript" th:src="@{/richtext/jquery.richtext.min.js}"></script>
+	
 </head>
 
 
@@ -41,13 +42,15 @@
 
 					<!-- Tab panes -->
 					<div class="tab-content">
-						<div class="tab-pane active" id="overview" role="tabpanel">
+						<div class="tab-pane active border border-2 " id="overview" role="tabpanel">
 							<div th:replace="products/product_overview :: content"></div>
 						</div>
 						<div class="tab-pane" id="description" role="tabpanel">
 							<div th:replace="products/product_description :: content"></div>
 						</div>
-						<div class="tab-pane" id="images" role="tabpanel">Images</div>
+						<div class="tab-pane" id="images" role="tabpanel">
+							<div th:replace="products/product_images :: content"></div>
+						</div>
 						<div class="tab-pane" id="details" role="tabpanel">Details</div>
 						<div class="tab-pane p-3" id="shipping" role="tabpanel">
 							<div th:replace="products/product_shipping :: content"></div>
@@ -56,9 +59,9 @@
 
 				</div>
 
-				<div class="text-center">
+				<div class="text-center mt-3 ">
 					<input type="submit" value="Save" class="btn btn-primary mr-3">
-					<input type="button" value="Cancel" class="btn btn-secondary"
+					<input type="button" value="Cancel" class="btn btn-secondary" style="background-color: #4c75a3;"
 						id="buttonCancel">
 				</div>
 			</form>
@@ -68,60 +71,18 @@
 
 	</div>
 
-	<script th:src = "@{/js/common_form.js}"></script>
+	
 
-<script type="text/javascript">
-	moduleURL = "[[@{/products}]]"
-	brandModuleURL = "[[@{/brands}]]"
-	dropdownBrands = $("#brand")
-	dropdownCategories =$("#category")
-	
-	$(document).ready(function(){
-	
-		$("#shortDescription").richText();
-		$("#fullDescription").richText();
+	<script type="text/javascript">
+		MAX_FILE_SIZE = 502400; //500KB
+		max_file_size_text = "500KB";
+		moduleURL = "[[@{/products}]]"
+		brandModuleURL = "[[@{/brands}]]"
+		defaultImageThumbnailSrc = "[[@{/images/image-thumbnail.png}]]";
 		
-		dropdownBrands.change(function(){
-			dropdownCategories.empty();
-			getCategories();
-		});
-		getCategories();
-	})
-	
-	function getCategories(){
-		brandId = dropdownBrands.val();
-		url = brandModuleURL + "/" + brandId + "/categories";
-		$.get(url, function(responseJson){
-			$.each(responseJson, function(index, category){
-				$("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
-			})
-		})
-	}
-	
-	function checkUnique(form){
-		productName = $("#name").val();
-		productId = $("#id").val();
-		
-		csrfValue = $("input[name = '_csrf']").val()
-	
-		url = "[[@{/products/check_unique}]]"
-		params = {id : productId, name: productName, _csrf: csrfValue};
-		
-		$.post(url, params, function(response){
-			if(response == "OK"){
-				form.submit();
-			}else if(response == "Duplicate"){
-				showWarningModal("There is another category having the same name: " + productName)
-			}else{
-				showErrorModal("Unknown response from server");
-			}
-		}).fail(function(){
-			showErrorModal("Could not connect to the server")
-		});
-		
-		return false;
-	}
-</script>
+	</script>
+	<script th:src = "@{/js/common_form.js}"></script>
+	<script th:src = "@{/js/product_form.js}"></script>
 </body>
 
 </html>

@@ -60,7 +60,6 @@ public class BrandService {
 	
 	public void delete(Integer id) throws BrandNotFoundException{
 		Long countById = brandRepo.countById(id);
-		
 		if(countById == null || countById == 0) {
 			throw new BrandNotFoundException("Could not find any brand with ID " + id);
 		}

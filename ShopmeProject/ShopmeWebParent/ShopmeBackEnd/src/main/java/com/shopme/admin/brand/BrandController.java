@@ -94,7 +94,6 @@ public class BrandController {
 			redirectAttributes.addFlashAttribute("message",e.getMessage());
 			return "redirect:/brands";
 		}
-		
 	}
 	
 	@GetMapping("/brands/delete/{id}")
@@ -123,7 +122,7 @@ public class BrandController {
 			
 			Brand savedBrand = brandService.save(brand);
 			String uploadDir = "../brand-logos/" + savedBrand.getId();
-			
+			                                                 
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		}else {
