@@ -52,6 +52,28 @@ public class ProductController {
 		
 	}
 	
+	@GetMapping("/products/edit/{id}")
+	public String editProduct(@PathVariable(name = "id") Integer id, Model model,
+			RedirectAttributes redirectAttributes) {
+		try {
+			Product product = productService.get(id);
+			List<Brand> listBrands = brandService.listAll();
+			Integer numberOfExistingImages = product.getImages().size();
+			
+			
+			model.addAttribute("listBrands", listBrands);
+			model.addAttribute("product",product); 
+			model.addAttribute("pageTitle", "Edit Product (ID: " + id + ")");
+			model.addAttribute("numberOfExistingImages", numberOfExistingImages);
+			return "products/product_form";
+			
+		} catch (ProductNotFoundException e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+			return "redirect:/products";
+		}
+	}
+	
+	
 	@PostMapping("/products/save")
 	public String saveProducts(Product product,
 			@RequestParam("fileImage") MultipartFile mainMultipartFile,
