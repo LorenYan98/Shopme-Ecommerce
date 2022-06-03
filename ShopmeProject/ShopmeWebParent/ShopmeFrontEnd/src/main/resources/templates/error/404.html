@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace = "fragments :: page_head('Shopme','none')">
-<title>Welcome to Shopme</title>
-</head>
+<head th:replace = "fragments :: page_head('Page Not Found Error - Shopme','none')">
 <body>
 	<div class="container-fluid">
 	<div  th:replace = "navigation :: header_menu"></div>
-	
-	<h2>Welcome to Shopme eCommerce</h2>
-	
+
+		<div class= "m-3">
+			<h2>Sorry, the requested page could not be found</h2>
+		</div>
 	<div  th:replace = "navigation :: footer_menu"></div>
+
 	</div>
 </body>
 </html>
