@@ -31,7 +31,7 @@
 	
 	<th th:fragment="column_link(moduleURL, fieldName, columnLabel, removeTag)" th:remove = "${removeTag}">
 		<a class = "text-white"
-		th:href="@{${moduleURL} +'/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyword != null? '&keyword=' + keyword: ''}}">
+		th:href="@{${moduleURL} +'/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyword != null? '&keyword=' + keyword: ''} + ${categoryId != null? '&categoryId=' + categoryId: ''}}">
 			[[${columnLabel}]]
 		</a>
 
@@ -43,7 +43,7 @@
 	
 	<a th:fragment="page_link(moduleURL, pageNum, label)" 
 		class = "page-link" 
-		th:href="@{${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} +'&sortDir=' + ${sortDir}+ ${keyword != null? '&keyword=' + keyword: ''}}">[[${label}]]</a>
+		th:href="@{${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} +'&sortDir=' + ${sortDir}+ ${keyword != null? '&keyword=' + keyword: ''} + ${categoryId != null? '&categoryId=' + categoryId: ''}}">[[${label}]]</a>
 	
 	
 	
@@ -96,7 +96,7 @@
 	
 	<th th:fragment="category_column_link(fieldName, columnLabel, removeTag)" th:remove = "${removeTag}">
 		<a class = "text-white"
-		th:href="@{'/categories/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyWord != null? '&keyWord=' + keyWord: ''}}">
+		th:href="@{'/categories/page/' + ${currentPage} + '?sortField=' +${fieldName} + '&sortDir=' + ${sortField != fieldName? sortDir : reverseSortDir} + ${keyWord != null? '&keyWord=' + keyWord: ''} + ${categoryId != null? '&categoryId=' + categoryId: ''}}">
 			[[${columnLabel}]]
 		</a>
 
@@ -123,6 +123,33 @@
 		</form>
 	</div>
 	
+	
+	<div th:fragment ="category_filter_form(moduleURL)">
+		<form th:action = "@{${moduleURL}+'/page/1'}" class = "form-inline m-3"
+			id ="searchForm">
+			<input type = "hidden" name = "sortField" th:value = "${sortField}">
+			<input type = "hidden" name = "sortDir" th:value = "${sortDir}">
+			
+			Category:&nbsp;&nbsp;
+			<select class="form-control mr-3" name = "categoryId" id="dropdownCategory">
+				<option value ="0"> All Categories </option>
+				<th:block th:each="cat : ${listCategories}">
+					<option th:value="${cat.id}" th:selected = "(${categoryId}== ${cat.id})">[[${cat.name}]]</option>
+				</th:block>
+			</select>
+			
+			Filter: &nbsp;
+			<input type = "search" name = "keyword" th:value = "${keyword}" class="form-control" required>
+			&nbsp;&nbsp;
+			<button type = "submit" value = "Search" class ="btn btn-primary">
+				<i class="fas fa-search icon-white" ></i>
+			</button>
+			&nbsp;&nbsp;
+			<button type = "button" value = "Clear" class ="btn btn-secondary" style="background-color: #4c75a3;" onclick = "clearFilter()">
+				<i class="fas fa-eraser"></i>
+			</button>
+		</form>
+	</div>
 	
 	<div th:fragment ="deleteModalPopUps">
 		<div class = "modal fade text-center" id = "deleteConfirm">

@@ -48,21 +48,45 @@
 							<div th:replace="products/product_overview :: content"></div>
 						</div>
 						<div class="tab-pane" id="description" role="tabpanel">
+							<th:block sec:authorize = "hasAnyAuthority('Salesperson')">
+							<div th:replace="products/product_description_readonly :: content"></div>
+							</th:block>
+							
+							<th:block sec:authorize = "hasAnyAuthority('Admin','Editor')">
 							<div th:replace="products/product_description :: content"></div>
+							</th:block>
 						</div>
 						<div class="tab-pane" id="images" role="tabpanel">
+							<th:block sec:authorize = "hasAnyAuthority('Salesperson')">
+							<div th:replace="products/product_images_readonly :: content"></div>
+							</th:block>
+							
+							<th:block sec:authorize = "hasAnyAuthority('Admin','Editor')">
 							<div th:replace="products/product_images :: content"></div>
+							</th:block>
 						</div>
 						<div class="tab-pane p-3 " id="details" role="tabpanel">
+							<th:block sec:authorize = "hasAnyAuthority('Salesperson')">
+							<div th:replace="products/product_details_readonly :: content"></div>
+							</th:block>
+							
+							<th:block sec:authorize = "hasAnyAuthority('Admin','Editor')">
 							<div th:replace="products/product_details :: content"></div>
 							<div>
 								<input type ="button" class="btn btn-secondary ml-2 mt-4" value="Add More Detail" 
 								style="background-color: #4c75a3;"
 								onclick="addNextDetailSection()">
 							</div>
+							</th:block>
 						</div>
 						<div class="tab-pane p-3 border border-2" id="shipping" role="tabpanel">
+							<th:block sec:authorize = "hasAnyAuthority('Salesperson')">
+							<div th:replace="products/product_shipping_readonly :: content"></div>
+							</th:block>
+							
+							<th:block sec:authorize = "hasAnyAuthority('Admin','Editor')">
 							<div th:replace="products/product_shipping :: content"></div>
+							</th:block>
 						</div>
 					</div>
 

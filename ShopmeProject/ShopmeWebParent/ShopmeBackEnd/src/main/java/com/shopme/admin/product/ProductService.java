@@ -7,6 +7,10 @@ import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,7 @@ import com.shopme.common.entity.Product;
 @Service
 @Transactional
 public class ProductService {
+	public static final int ROOT_PRODUCTS_PER_PAGE = 5;
 	@Autowired
 	private ProductRepository productRepo;
 	
@@ -39,6 +44,15 @@ public class ProductService {
 		product.setUpdatedTime(new Date());
 		return productRepo.save(product);
 		
+	}
+	
+	public void saveProductPrice(Product productInForm) {
+		Product productInDB = productRepo.findById(productInForm.getId()).get();
+		productInDB.setCost(productInForm.getCost());
+		productInDB.setPrice(productInDB.getPrice());
+		productInDB.setDiscountPercent(productInForm.getDiscountPercent());
+		
+		productRepo.save(productInDB);
 	}
 
 	public String checkUnique(Integer id, String name) {
@@ -76,5 +90,34 @@ public class ProductService {
 			throw new ProductNotFoundException("Could not find any product with ID " + id);
 		}
 		
+	}
+	
+	public Page<Product> listByPage(int pageNum, String sortField, String sortDir,
+			String keyword, Integer categoryId) {
+		
+		Sort sort = Sort.by(sortField);
+		
+		if(sortDir.equals("asc")) { 
+			sort = sort.ascending();
+		}else if(sortDir.equals("desc")){
+			sort = sort.descending();
+		}
+		
+		Pageable pageable = PageRequest.of(pageNum -1, ROOT_PRODUCTS_PER_PAGE, sort);
+
+		if(keyword != null && !keyword.isEmpty()) {
+			if(categoryId != null && categoryId > 0) {
+				String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+				return productRepo.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
+			}
+			return productRepo.findAll(keyword, pageable);
+		}
+		
+		if(categoryId != null && categoryId > 0) {
+			String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+			return productRepo.findAllInCategory(categoryId, categoryIdMatch, pageable);
+		}
+		
+		return productRepo.findAll(pageable);
 	}
 }

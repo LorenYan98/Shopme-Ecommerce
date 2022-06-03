@@ -48,9 +48,9 @@ public class BrandController {
 	
 		Page<Brand> listBrands = brandService.listByPage(pageNum,sortField, sortDir, keyword);
 		
-		long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
-		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
-		if(endCount > listBrands.getTotalPages()) {
+		long startCount = (pageNum - 1) * BrandService.ROOT_BRANDS_PER_PAGE + 1;
+		long endCount = startCount +  BrandService.ROOT_BRANDS_PER_PAGE - 1;
+		if(endCount > listBrands.getTotalElements()) {
 			endCount = listBrands.getTotalElements();
 		}
 		String reverseSortDir = sortDir.equals("asc")? "desc" : "asc";

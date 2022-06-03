@@ -17,28 +17,38 @@
 			<input type="hidden" th:field="*{mainImage}">
 		</div>
 		
+
+
 		<th:block th:each="productImage, status : ${product.images}">
 		<div class="col-3 border border-2 m-2 p-2" th:id ="'divExtraImage' + ${status.index}">
 			<div>
 				<label>Extra Image #[[${status.index + 1}]]: [[${productImage.name}]]</label>
 				<a class="fas fa-times-circle fa-2x float-right" 
+				name= "linkRemoveExtraImage"
 			 	style="color:#333333;"
-			 	href="javascript:removeExtraImage(${index} - 1)"
-			 	title="Remove this image"></a>;
+			 	title="Remove this image"></a>
 			</div>
 			<div class ="m-2 mb-3">
-				<img th:id ="'extraThumbnail' + ${status.index}" alt="Extra image #[[${status.index}]] preview" class="img-fluid"
+				<img th:id ="'extraThumbnail' + ${status.index}" 
+					th:alt="'Extra image #'+${status.index + 1} + ' preview'" class="img-fluid"
 					th:src = "@{${productImage.imagePath}}">
 			</div>
 			<div>
 				<input type="file" class="form-control" name="extraImage"
 					accept="image/png, image/jpeg">
 			</div>
+		
+			<input type = "hidden" name= "imageIDs" th:id = "'imageId' + ${status.index}"
+					th:value = "${productImage.id}"/>
+			<input type = "hidden" name= "imageNames" th:id = "'imageName' + ${status.index}"
+					th:value = "${productImage.name}"/>
 		</div>
 		</th:block>
 		
 		<div class="col-3 border border-2 m-2 p-2" th:id ="'divExtraImage'+${numberOfExistingImages}">
-			<div th:id="'extraImageHeader'+${numberOfExistingImages}"><label>Extra Image #[[${numberOfExistingImages + 1}]]: </label></div>
+			<div th:id="'extraImageHeader'+${numberOfExistingImages}">
+				<label>Extra Image #[[${numberOfExistingImages + 1}]]: </label>
+			</div>
 			<div class ="m-2 mb-3">
 				<img th:id ="'extraThumbnail' + ${numberOfExistingImages}" alt="Extra image #[[${numberOfExistingImages + 1}]] preview" class="img-fluid"
 					th:src = "@{/images/image-thumbnail.png}">

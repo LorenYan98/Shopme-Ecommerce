@@ -37,6 +37,9 @@ public class Category {
 	
 	private boolean enabled;
 	
+	@Column(name = "all_parent_ids", length = 256, nullable = true)
+	private String allParentIDString;
+	
 	@OneToOne
 	@JoinColumn(name = "parent_id")
 	private Category parent;
@@ -163,6 +166,13 @@ public class Category {
 
 	public void setChildern(Set<Category> childern) {
 		this.childern = childern;
+	}
+	
+	public String getAllParentIDString() {
+		return allParentIDString;
+	}
+	public void setAllParentIDString(String allParentIDString) {
+		this.allParentIDString = allParentIDString;
 	}
 	
 	@Transient

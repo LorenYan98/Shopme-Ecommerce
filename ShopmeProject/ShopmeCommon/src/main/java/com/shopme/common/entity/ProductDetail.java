@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.mapping.Value;
 
 @Entity
-@Table(name = "product_detail")
+@Table(name = "product_details")
 public class ProductDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,13 @@ public class ProductDetail {
 	public ProductDetail() {
 	}
 	
+	public ProductDetail(Integer id, String name, String value, Product product) {
+		this.id = id;
+		this.name = name;
+		this.value = value;
+		this.product = product;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;

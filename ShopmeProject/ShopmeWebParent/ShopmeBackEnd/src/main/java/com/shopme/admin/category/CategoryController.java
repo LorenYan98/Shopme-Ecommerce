@@ -49,7 +49,7 @@ public class CategoryController {
 		
 		long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
 		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
-		if(endCount > pageInfo.getTotalPages()) {
+		if(endCount > pageInfo.getTotalElement()) {
 			endCount = pageInfo.getTotalElement();
 		}
 		String reverseSortDir = sortDir.equals("asc")? "desc" : "asc";

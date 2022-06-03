@@ -12,14 +12,27 @@
 				}else{
 					showExtraImageThumbnail(this, index);
 				}
-				
 			});
 		});
 		
-	})
+		$("a[name='linkRemoveExtraImage']").each(function(index){
+			$(this).click(function(){
+				removeExtraImage(index);
+			});
+		});
+	});
 	
 	function showExtraImageThumbnail(fileInput, index){
 		var file = fileInput.files[0];
+		
+		fileName = file.name;
+		imageNameHiddenField = $("#imageName" + index);
+		
+		if(imageNameHiddenField.length){
+			imageNameHiddenField.val(fileName);
+		}
+		
+		
 		//FileReader(File file)	It gets filename in file instance. 
 		//It opens the given file in read mode. If file doesn't exist, it throws FileNotFoundException.
 		var reader = new FileReader();
@@ -62,7 +75,6 @@
 	}
 	
 	function removeExtraImage(index){
-
 		$("#divExtraImage" + index).remove();
 	}
 	
