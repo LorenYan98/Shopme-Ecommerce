@@ -10,7 +10,7 @@
 	 <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop By Categories</h1>
+                    <h1 class="display-4 fw-bolder">Shop By Category</h1>
                     <p class="lead fw-normal text-white-50 mb-0">With Shopme</p>
                 </div>
             </div>
@@ -18,22 +18,22 @@
 	
 	 <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5" th:each = "cat : ${listCategories}">
-                        <div class="card h-100">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 d-flex justify-content-center">
+                    <div class="col mb-5 product product-single" th:each = "cat : ${listCategories}">
+                        <div class="product-thumb card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top img-responsive" th:src="@{${cat.imagePath}}" alt="..." />
+                            <div class=" d-flex justify-content-center">
+                            <a class="main-btn quick-view text-center" role="button" th:href="'c/'+${cat.alias}"><i class="fa fa-search-plus"></i>View Category</a>
+                            <img class="product-thumb card-img-top img-responsive" th:src="@{${cat.imagePath}}" alt="..." />
+                            </div>
                             <!-- Product details-->
                             <div class="card-body p-4 ">
                                 <div class="text-center ">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">[[${cat.name}]]</h5>
+                                    <h5 class=" fw-bolder">[[${cat.name}]]</h5>
                                 </div>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark optionTab mt-auto"th:href="'c/'+${cat.alias}">View options</a></div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

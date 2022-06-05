@@ -3,7 +3,7 @@ package com.shopme.common.entity;
 
 
 import java.beans.Transient;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -240,5 +240,14 @@ public class Product {
 			return name.substring(0,70).concat("...");
 		}
 		return name;
+	}
+	
+	@Transient
+	public float getDiscountPrice() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		if(discountPercent > 0) {
+			return Float.parseFloat(df.format((price * (100 - discountPercent)/100)));
+		}
+		return this.price;
 	}
 }

@@ -45,7 +45,7 @@ public class Category {
 	private Category parent;
 	
 	@OneToMany(mappedBy = "parent")
-	private Set<Category> childern = new HashSet<>();
+	private Set<Category> children = new HashSet<>();
 	
 	
 
@@ -77,7 +77,7 @@ public class Category {
 		newCategory.setAlias(category.getAlias());
 		newCategory.setEnabled(category.isEnabled());
 		newCategory.setImage(category.getImage());
-		newCategory.setHasChildren(category.getChildern().size() > 0);
+		newCategory.setHasChildren(category.getChildren().size() > 0);
 		return newCategory;
 	}
 	
@@ -160,12 +160,12 @@ public class Category {
 		this.parent = parent;
 	}
 
-	public Set<Category> getChildern() {
-		return childern;
+	public Set<Category> getChildren() {
+		return children;
 	}
 
-	public void setChildern(Set<Category> childern) {
-		this.childern = childern;
+	public void setChildern(Set<Category> children) {
+		this.children = children;
 	}
 	
 	public String getAllParentIDString() {

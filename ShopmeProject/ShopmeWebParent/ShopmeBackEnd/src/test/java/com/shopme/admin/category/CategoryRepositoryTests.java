@@ -50,7 +50,7 @@ public class CategoryRepositoryTests {
 		Category category = repo.findById(1).get();
 		System.out.println(category.getName());
 		
-		Set<Category> children = category.getChildern();
+		Set<Category> children = category.getChildren();
 		for(Category c: children) {
 			System.out.println(c.getName());
 		}
@@ -65,7 +65,7 @@ public class CategoryRepositoryTests {
 			if(subCategory.getParent() == null) {
 				System.out.println(subCategory.getName());
 				
-				Set<Category> children = subCategory.getChildern();
+				Set<Category> children = subCategory.getChildren();
 				for(Category c :children){
 					System.out.println("-- " + c.getName());
 				}

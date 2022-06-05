@@ -54,7 +54,7 @@ public class CategoryService {
 		if(keyword != null && !keyword.isEmpty()) {
 			List<Category> searchResult = pageCategories.getContent();
 			for(Category category : searchResult) {
-				category.setHasChildren(category.getChildern().size() > 0);
+				category.setHasChildren(category.getChildren().size() > 0);
 			}
 			return searchResult;
 		}else{
@@ -68,7 +68,7 @@ public class CategoryService {
 		
 		for(Category rootCategory: rootCategories) {
 			hierarchicalCategories.add(Category.copyFull(rootCategory));
-			Set<Category> children = sortSubCategories(rootCategory.getChildern(), sortDir);
+			Set<Category> children = sortSubCategories(rootCategory.getChildren(), sortDir);
 			for(Category subCategory: children) {
 				String name = "--" + subCategory.getName();
 				hierarchicalCategories.add(Category.copyFull(subCategory, name));		
@@ -81,7 +81,7 @@ public class CategoryService {
 	
 	private void listSubHierarchicalCategories(List<Category> hierarchicalCategories,
 			Category parent, int subLevel, String sortDir) {
-		Set<Category> children = sortSubCategories(parent.getChildern(), sortDir);
+		Set<Category> children = sortSubCategories(parent.getChildren(), sortDir);
 		
 		for(Category subCategory : children) {
 			String name = "";
@@ -113,7 +113,7 @@ public class CategoryService {
 			if(category.getParent() == null) {
 				categoriesUsedInForm.add(Category.copyIdAndName(category));
 				
-				Set<Category> children = sortSubCategories(category.getChildern());
+				Set<Category> children = sortSubCategories(category.getChildren());
 				
 				for(Category subCategory : children) {
 					String name = "--" + subCategory.getName();
@@ -129,7 +129,7 @@ public class CategoryService {
 	
 	private void listChildren(List<Category> categoriesUsedInForm, Category parent, int sublevel) {
 		int newSubLevel = sublevel + 1;
-		Set<Category> children = parent.getChildern();
+		Set<Category> children = parent.getChildren();
 		
 		for(Category subCategory : children) {
 			String name = "";
@@ -213,7 +213,7 @@ public class CategoryService {
 			throw new CategoryNotFoundException("Could not find any category with ID " + id);
 		}
 		Category deleteCategory = repo.findById(id).get();
-		Set<Category> children = deleteCategory.getChildern();
+		Set<Category> children = deleteCategory.getChildren();
 		if(children.isEmpty() || children == null) {
 			repo.deleteById(id);
 		}else {
