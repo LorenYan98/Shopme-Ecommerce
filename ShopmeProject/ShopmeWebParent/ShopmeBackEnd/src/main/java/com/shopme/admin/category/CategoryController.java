@@ -22,6 +22,7 @@ import com.shopme.admin.user.UserService;
 import com.shopme.admin.user.export.UserCsvExporter;
 import com.shopme.common.entity.Category;
 import com.shopme.common.entity.User;
+import com.shopme.common.exception.CategoryNotFoundException;
 
 
 

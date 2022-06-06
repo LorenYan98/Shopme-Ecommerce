@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content" th:remove = "tag">
+ <div th:if = "${listCategoryParents != null && !listCategoryParents.empty}" >
+			<div class="row mb-4">
+				<div class="col">
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+						<div>
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a  th:href="@{/}">Home</a></li>
+									
+									<th:block th:each="parent, index : ${listCategoryParents}">
+										<li class="breadcrumb-item">
+											<span th:if="${index.count == index.size and product == null}">
+												<a  th:href="@{'/c/' + ${parent.alias}}"><u>[[${parent.name}]]</u></a>
+											</span>
+											<span th:if="${index.count != index.size or product != null}">
+												<a th:href="@{'/c/' + ${parent.alias}}">[[${parent.name}]]</a>
+											</span>
+										</li>
+									</th:block>
+									
+									<li class= "breadcrumb-item" th:if="${product != null}">
+										<span> [[${product.shortName}]]</span>
+									</li>
+								</ol>
+							</nav>
+						</div>
+					</nav>
+				</div>
+			</div>
+	</div>
+</div>
+</body>
+</html>

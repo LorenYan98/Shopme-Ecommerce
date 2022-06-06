@@ -24,4 +24,8 @@ public class ProductService {
 		
 	}
 	
+	public Product getProductByAlias(String alias) {
+		return repo.findByAlias(alias);
+	}
+	
 }

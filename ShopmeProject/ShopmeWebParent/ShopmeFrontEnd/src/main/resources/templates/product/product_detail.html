@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<head th:replace = "fragments :: page_head(${pageTitle}, 'tag')"/>
+</head>
+<title>Welcome to Shopme</title>
+</head>
+<body>
+	<div class="container-fluid">
+	<div  th:replace = "navigation :: header_menu"></div>
+	
+	
+		<div th:replace ="breadcrumb :: content"></div>
+	   <div class="single_product">
+        <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+            <div class="row">
+                <div class="col-lg-5">
+                	<div class="thumbnail-box ">
+                    <div class="m-2 thumbnail-box thumbnail-box-main">
+                        <img id="big-image" class = "zoom-image img-fluid " th:src = "@{${product.mainImagePath}}" index="0">
+                    </div>
+                    </div>
+                    <div class="col thumbnail-box" >
+                    	<span class="m-2 product product-single">
+                    		<img class="thumbnail-image" th:src = "@{${product.mainImagePath}}" height ="60" index="0" />
+                    	</span>
+                    	
+                    	<th:block th:each ="extraImage, status :${product.images}">
+                    	<span class="m-2 product product-single">
+                    		<img class="thumbnail-image" th:src = "@{${extraImage.imagePath}}" height ="60" th:index ="${status.count}" />
+                    	</span>
+                    	</th:block>
+                    </div>
+                    
+                    
+                </div>
+         
+                <div class="col-sm px-4  mr-5" >
+                    <div class="product_description">
+
+                         <h2 class="product_name"> <b>[[${product.name}]] </b></h2>
+                        <div class="product-rating"><span class="badge badge-success"><i class="fa fa-star"></i> 4.5 Star</span> <span class="rating-review">35 Ratings & 45 Reviews</span></div>
+                        <div> <span class="product_price">[[${product.brand.name}]]</span> </div>
+                       
+                       <div class="product-body">
+							<div th:if="${product.discountPercent <= 0}">
+								With Deal:  <h3  class="product-price">$[[${product.price}]]</h3>
+							</div>
+							
+							<div th:if="${product.discountPercent > 0}">
+								With Deal:  &nbsp;<h3 class="product-price-discount" >$[[${product.discountPrice}]]</h3><br>
+								List Price: &nbsp; <del><h3 class="product-price" style="font-size: large;">$[[${product.price}]]</h3></del><br>
+								You Save:  &nbsp;<span class="product-price-discount" style="font-size: large;">$[[${product.savePrice}]] ([[${product.discountPercent}]]% off)</span>
+							</div>
+							<div>&nbsp;</div>
+							<div th:utext = "${product.shortDescription}"> </div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-2">
+					<span th:if="${product.inStock}" class="text-success"><b>In Stock</b> </span>
+					<span th:unless="${product.inStock}" class="text-danger"><b>Out of Stock</b> </span>
+					<div>
+
+						<div class="quantity buttons_added">
+                                <input type="button" value="-" class="minus">
+                                <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="">
+                                <input type="button" value="+" class="plus">
+                            </div>
+					</div>
+					
+					<div class="product-btns">
+						
+						<button class="primary-btn add-to-cart mt-3 mb-2"><i class="fa fa-shopping-cart"></i> Add to Cart</button> <br>
+						<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+						<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
+			    <div class=" col-md-5">
+			    <div><hr class="singleline mr-2" /></div>
+			    	<div>
+			    		<h3>Product Description: </h3>
+			    	</div>
+			    	<div th:utext ="${product.fullDescription}"> </div>
+			    </div>
+			    
+			    <div class="col-lg-5">
+			    <div><hr class="singleline mr-2" /></div>
+			    	<div>
+			    		<h3>Product Details: </h3>
+			    	</div>
+			    	<table class="table table-striped">
+			    	<tbody>
+			    	<th:block th:each="detail:${product.details}">
+			    		<tr>
+			    			<td><b>[[${detail.name}]] </b> </td>
+			    			<td>[[${detail.value}]]</td>
+			    		</tr>
+			    	</th:block>
+			    	</tbody>
+			    	</table>
+			    </div>
+			</div>
+         
+            </div>
+       
+
+    </div>
+
+	<div  th:replace = "navigation :: footer_menu"></div>
+	<div  th:replace = "product/images_carousel :: content"></div>
+	<script th:src = "@{/js/quantity.js}"></script>
+	
+	<script type="text/javascript" src="https://assets.website-files.com/5e2755779d8b8ea1d6373797/5ea88e92dce9b4b66f165490_zoom.txt"></script>
+	<script>
+	 $(document).ready(function(){
+	 	bigImage = $("#big-image")
+	 	$(".thumbnail-image").mouseover(function(){
+	 		currentImage = $(this).attr("src");
+	 		currentIndex = $(this).attr("index");
+	 	 	bigImage.attr("src",currentImage);
+	 	 	bigImage.attr("index",currentIndex);
+
+	 	});
+	 	$(".thumbnail-image").on("click", function(){
+	 		$("#carouselModal").modal("show");
+	 		imageIndex = parseInt(bigImage.attr("index"));
+			$("#carouselExampleControls").carousel({interval:false});
+	 		$("#carouselExampleControls").carousel(imageIndex);
+	 	});
+	 });
+	 
+	 
+	 
+	  jQuery(function(){
+	 
+	   if(!$.fn.imagezoomsl){
+	 
+	      $('.msg').show();
+	      return;
+	    }
+	    else $('.msg').hide();
+	 
+	    // plugin initialization
+	    $('.zoom-image').imagezoomsl({
+	 
+	      innerzoommagnifier: true,
+	      classmagnifier: "round-loope",
+	      magnifiersize: [200, 200],
+	      // disables the scrolling of the document with the mouse wheel when the cursor is over the image
+	      disablewheel: false
+	    });
+	  });
+	</script>
+	</div>
+</body>
+</html>

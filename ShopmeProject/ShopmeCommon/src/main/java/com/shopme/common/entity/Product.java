@@ -250,4 +250,13 @@ public class Product {
 		}
 		return this.price;
 	}
+	
+	@Transient
+	public float getSavePrice() {
+		DecimalFormat df = new DecimalFormat("0.00");
+		if(discountPercent > 0) {
+			return Float.parseFloat(df.format((price - this.getDiscountPrice())));
+		}
+		return 0;
+	}
 }
