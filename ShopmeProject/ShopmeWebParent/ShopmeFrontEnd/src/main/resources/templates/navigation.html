@@ -8,7 +8,7 @@
 			<img th:src="@{/images/shopmeCos.jpg}" style = "width : 130px" class = "img-fluid"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-				data-mdb-target="#topNavbar" aria-controls="navbarSupportedContent"
+				data-mdb-target="#topNavbar, #searchNavbar" aria-controls="navbarSupportedContent"
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="fas fa-bars"></span>
 			</button>
@@ -42,6 +42,22 @@
 				</ul>
 			</div>
 		</nav>
+	</div>
+	
+	<div th:fragment = "search_nav" class = "row">
+		<div class="col-md">
+			<nav class="navbar navbar-expand-lg  bg-light" style="background-color: black" >
+			<div class="collapse navbar-collapse " id="searchNavbar">
+				<form class ="form-inline search-bar" th:action="@{/search}" method="get">
+					<i class="fas fa-search p-2" style="font-size:24px;"></i>
+					<input type="text" class="main-input main-name" name="keyword" 
+					placeholder="Search by keyword" th:value ="${keyword}" required  />
+			      <input class="main-submit" type="submit" value="Search" />
+				</form>
+				</div>
+			</nav>
+		
+		</div>
 	</div>
 	
 	<div th:fragment = "footer_menu">

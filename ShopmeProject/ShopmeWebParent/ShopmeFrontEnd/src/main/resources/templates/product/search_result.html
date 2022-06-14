@@ -6,25 +6,18 @@
 <body>
 	<div class="container-fluid">
 	<div  th:replace = "navigation :: header_menu"></div>
+	
 	<div  th:replace = "navigation :: search_nav"></div>
-	 <div th:replace ="breadcrumb :: content"></div>
-	 
-			<div class="container px-4 px-lg-5 mt-5">
-			<div class="row text-center ">
-				<th:block th:each="cat :${category.children}">
-				<div class="col d-flex justify-content-center" th:if="${cat.enabled == true}">
-				<a th:href="@{'/c/' + ${cat.alias}}" >
-					<div class= "product product-single">
-						<img th:src = "@{${cat.imagePath}}" height ="100"> 
-						<br/>
-						<b>[[${cat.name}]]</b>
-					</div>
-				</a>
-				</div>
-				</th:block>
-			</div>
-			
-			<section class="py-5">
+	
+	<div class="m-2" th:if="${totalItem > 0}">
+		<h2>Search Results for '[[${keyword}]]'</h2>
+	</div>
+	
+	<div class="m-2" th:unless="${totalItem > 0}">
+		<h2>No Match found for '[[${keyword}]]'</h2>
+	</div>
+	
+	<section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
 			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 d-flex justify-content-center">
 				<th:block th:each ="product : ${listProducts}">
@@ -33,11 +26,9 @@
 			</div>
 			</div>
 			</section>
-			
-		</div>
-	<div th:replace = "fragments :: pagination('/c/' + ${category.alias}, 'products')"></div>
+	
+	<div th:replace = "fragments :: pagination('/search', 'products')"></div>
 	<div  th:replace = "navigation :: footer_menu"></div>
 	</div>
-	
 </body>
 </html>

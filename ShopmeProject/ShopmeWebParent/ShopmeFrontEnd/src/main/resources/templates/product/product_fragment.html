@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div th:fragment="content" class="col col-lg-4 col-md-4 col-sm-6 col-xs-12 mb30 ">
+		<div class="product product-single">
+			<div class="thumbnail-box-list">
+				<div class="product-thumb d-flex justify-content-center ">
+					<a class="main-btn quick-view text-center" th:href="@{'/p/' + ${product.alias}}"><i class="fa fa-search-plus"></i> Quick view</a>
+					<img class="listCategoryImage"th:src = "@{${product.mainImagePath}}">
+				</div>
+			</div>
+			<div class="product-body">
+				<div th:if="${product.discountPercent <= 0}">
+					<h3 class="product-price">$[[${product.price}]]</h3>
+				</div>
+				
+				<div th:if="${product.discountPercent > 0}">
+					<h3 class="product-price" style=" color:darkred">$[[${product.discountPrice}]]</h3>
+					<del><h3  style="font-size: large;">$[[${product.price}]]</h3></del>
+				</div>
+				
+				<div class="product-rating">
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star-o empty"></i>
+				</div>
+				<h2 class="product-name"><a th:href="@{'/p/' + ${product.alias}}">[[${product.shortName}]]</a></h2>
+				<div class="product-btns">
+					<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+					<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+					<button class="primary-btn add-to-cart mt-3"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

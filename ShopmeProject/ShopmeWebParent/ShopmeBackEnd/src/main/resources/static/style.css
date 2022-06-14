@@ -23,3 +23,88 @@
 	div.less-details{display: none;}
 	.hideable-column{ display: table-cell;}
 }
+
+.account-sign {
+  padding: 100px 0px;
+  background-color: #EFEFEF;
+}
+
+.account-sign-in {
+  padding: 45px;
+  background-color: white;
+  border-radius: 5px;
+  margin-right: 24px;
+}
+
+.account-sign-in h5 {
+  color: #1A2224;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.account-sign-in form .form__div {
+  margin-bottom: 24px;
+}
+
+.account-sign-in form .form__div input {
+  border: 1px solid #989BA7;
+  border-radius: 4px;
+  padding: 20px;
+  width: 100% !important;
+}
+
+.account-sign-in form .password-info {
+  margin-top: 12px;
+  margin-bottom: 30px;
+}
+
+.account-sign-in form .password-info-left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.account-sign-in form .password-info-left input {
+  width: 15px;
+  height: 15px;
+  border-color: #989BA7;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+
+.account-sign-in form .password-info-left label {
+  cursor: pointer;
+  font-size: 14px;
+  color: #989BA7;
+}
+
+.account-sign-in form .password-info-right a {
+  color: #1A2224;
+  font-size: 14px;
+}
+
+.account-sign-in form button {
+  width: 100%;
+  padding: 15px 0px;
+  background-color: #335AFF;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.account-sign-in form button:focus {
+  background-color: #335AFF;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.account-sign-in .social-signing {
+  margin-top: 80px;
+}
