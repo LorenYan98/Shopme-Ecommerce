@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Setting {
 	
 	@Id
-	@Column(nullable = false, length = 128)
+	@Column(name = "`key`",nullable = false, length = 128)
 	private String key;
 	
 	@Column(nullable = false, length = 128)
@@ -21,6 +21,18 @@ public class Setting {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 45, nullable = false)
 	private SettingCategory category;
+
+	
+	
+	public Setting() {
+
+	}
+
+	public Setting(String key, String value, SettingCategory category) {
+		this.key = key;
+		this.value = value;
+		this.category = category;
+	}
 
 	public String getKey() {
 		return key;
