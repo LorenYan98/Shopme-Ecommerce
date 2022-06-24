@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-	<div th:fragment="content" class="col col-lg-4 col-md-4 col-sm-6 col-xs-12 mb30 ">
+	<div th:fragment="content" >
 		<div class="product product-single">
 			<div class="thumbnail-box-list">
 				<div class="product-thumb d-flex justify-content-center ">
@@ -10,7 +10,9 @@
 					<img class="listCategoryImage"th:src = "@{${product.mainImagePath}}">
 				</div>
 			</div>
-			<div class="product-body">
+			
+			
+			<div class="product-body mt-3">
 				<div th:if="${product.discountPercent <= 0}">
 					<h3 class="product-price">$[[${product.price}]]</h3>
 				</div>
@@ -19,14 +21,15 @@
 					<h3 class="product-price" style=" color:darkred">$[[${product.discountPrice}]]</h3>
 					<del><h3  style="font-size: large;">$[[${product.price}]]</h3></del>
 				</div>
-				
-				<div class="product-rating">
+	
+				<div class="product-rating col p-0">
 					<i class="fa fa-star"></i>
 					<i class="fa fa-star"></i>
 					<i class="fa fa-star"></i>
 					<i class="fa fa-star"></i>
 					<i class="fa fa-star-o empty"></i>
 				</div>
+				
 				<h2 class="product-name"><a th:href="@{'/p/' + ${product.alias}}">[[${product.shortName}]]</a></h2>
 				<div class="product-btns">
 					<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>

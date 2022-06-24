@@ -31,7 +31,9 @@ a.optionTab:hover {
 }
 
 .product.product-single .product-thumb>.listCategoryImage {
-  width: 150px;
+  width:150px;
+  max-width: 100%;
+  max-height: 200px;
 }
 
 
@@ -108,7 +110,7 @@ h3.product-price-discount, span.product-price-discount{
 
 .product.product-single .product-rating {
   float: right;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 .product.product-single .product-name {
